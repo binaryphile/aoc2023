@@ -62,6 +62,16 @@ func Filter[T any](s []T, p func(T) bool) Slice[T] {
 	return result
 }
 
+func FlatMapWithIndex[T, R any](s []T, f func(int, T) []R) Slice[R] {
+	result := make(Slice[R], 0, len(s))
+
+	for i, elem := range s {
+		result = append(result, f(i, elem)...)
+	}
+
+	return result
+}
+
 func Map[T, R any](s []T, f func(T) R) Slice[R] {
 	result := make(Slice[R], 0, len(s))
 
@@ -70,20 +80,6 @@ func Map[T, R any](s []T, f func(T) R) Slice[R] {
 	}
 
 	return result
-}
-
-type StringSlice[T any] struct {
-	Slice[string]
-}
-
-func StringSliceFrom[T any](s []string) StringSlice[T] {
-	return StringSlice[T]{
-		Slice: s,
-	}
-}
-
-func (s StringSlice[T]) Map(f func(string) T) Slice[T] {
-	return Map(s.Slice, f)
 }
 
 func isDigit(r rune) bool {
@@ -99,7 +95,7 @@ func toInt(r rune) int {
 	return i
 }
 
-func wordToNumber(word string) int {
+func toNumber(word string) int {
 	digits := RuneSliceFromString[int](word).Filter(isDigit).Map(toInt)
 
 	if len(digits) == 0 {
@@ -110,7 +106,7 @@ func wordToNumber(word string) int {
 }
 
 func SumWords(words []string) int {
-	sum, ok := StringSliceFrom[int](words).Map(wordToNumber).Reduce(item.Add[int])
+	sum, ok := Map(words, toNumber).Reduce(item.Add[int])
 	if !ok {
 		panic("no words")
 	}
@@ -201,7 +197,7 @@ func numWordToNumber(word string) int {
 }
 
 func SumNumWords(words []string) int {
-	sum, ok := StringSliceFrom[int](words).Map(numWordToNumber).Reduce(item.Add[int])
+	sum, ok := Map(words, numWordToNumber).Reduce(item.Add[int])
 	if !ok {
 		panic("no words")
 	}
