@@ -1,0 +1,4 @@
+github.com/mariomac/gostream v0.8.1 h1:umH0vv4LFXqMDnEhjEKr84VfIFGMhM49Oi9NOEhLZBw=
+github.com/mariomac/gostream v0.8.1/go.mod h1:aU11yntiBpx27cGc3nf4Mpn+W8pPQojszRBIdysCPyQ=
+golang.org/x/exp v0.0.0-20220328175248-053ad81199eb h1:pC9Okm6BVmxEw76PUu0XUbOTQ92JX11hfvqTjAV3qxM=
+golang.org/x/exp v0.0.0-20220328175248-053ad81199eb/go.mod h1:lgLbSvA5ygNOMpwM/9anMpWVlVJ7Z+cHWq/eFuinpGE=
