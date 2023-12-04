@@ -119,81 +119,81 @@ func SumWords(words []string) int {
 func numWordToNumber(word string) int {
 	runes := []rune(word)
 
-	first := 'a'
+	first := -1
 
-	var last rune
+	var last int
 
 	for i := 0; i < len(runes); i++ {
 		w := word[i:]
 
 		if runes[i] >= '0' && runes[i] <= '9' {
-			if first == 'a' {
-				first = runes[i]
-			}
+			last = toInt(runes[i])
 
-			last = runes[i]
+			if first == -1 {
+				first = 10 * last
+			}
 		} else if strings.HasPrefix(w, "one") {
-			if first == 'a' {
-				first = '1'
-			}
+			last = 1
 
-			last = '1'
+			if first == -1 {
+				first = 10
+			}
 		} else if strings.HasPrefix(w, "two") {
-			if first == 'a' {
-				first = '2'
-			}
+			last = 2
 
-			last = '2'
+			if first == -1 {
+				first = 20
+			}
 		} else if strings.HasPrefix(w, "three") {
-			if first == 'a' {
-				first = '3'
-			}
+			last = 3
 
-			last = '3'
+			if first == -1 {
+				first = 30
+			}
 		} else if strings.HasPrefix(w, "four") {
-			if first == 'a' {
-				first = '4'
-			}
+			last = 4
 
-			last = '4'
+			if first == -1 {
+				first = 40
+			}
 		} else if strings.HasPrefix(w, "five") {
-			if first == 'a' {
-				first = '5'
-			}
+			last = 5
 
-			last = '5'
+			if first == -1 {
+				first = 50
+			}
 		} else if strings.HasPrefix(w, "six") {
-			if first == 'a' {
-				first = '6'
-			}
+			last = 6
 
-			last = '6'
+			if first == -1 {
+				first = 60
+			}
 		} else if strings.HasPrefix(w, "seven") {
-			if first == 'a' {
-				first = '7'
-			}
+			last = 7
 
-			last = '7'
+			if first == -1 {
+				first = 70
+			}
 		} else if strings.HasPrefix(w, "eight") {
-			if first == 'a' {
-				first = '8'
-			}
+			last = 8
 
-			last = '8'
+			if first == -1 {
+				first = 80
+			}
 		} else if strings.HasPrefix(w, "nine") {
-			if first == 'a' {
-				first = '9'
-			}
+			last = 9
 
-			last = '9'
+			if first == -1 {
+				first = 90
+			}
 		}
 	}
 
-	if first == 'a' {
+	if first == -1 {
 		return 0
 	}
 
-	result := toInt(first)*10 + toInt(last)
+	result := first + last
 
 	return result
 }

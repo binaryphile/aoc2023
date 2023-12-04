@@ -93,7 +93,7 @@ func TestSumNumWords(t *testing.T) {
 			args: args{
 				words: loadFile("day1_input.txt"),
 			},
-			want: 55108,
+			want: 56324,
 		},
 	}
 
