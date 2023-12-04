@@ -9,15 +9,11 @@ import (
 type Slice[T any] []T
 
 func (s Slice[T]) Filter(p func(T) bool) Slice[T] {
-	result := make(Slice[T], 0, len(s))
+	return Filter(s, p)
+}
 
-	for _, elem := range s {
-		if p(elem) {
-			result = append(result, elem)
-		}
-	}
-
-	return result
+func (s Slice[T]) Map(f func(T) T) Slice[T] {
+	return Map(s, f)
 }
 
 func (s Slice[T]) Reduce(f func(T, T) T) (_ T, ok bool) {
@@ -54,6 +50,18 @@ func RuneSliceFromString[R any](s string) RuneSlice[R] {
 	}
 }
 
+func Filter[T any](s []T, p func(T) bool) Slice[T] {
+	result := make([]T, 0, len(s))
+
+	for _, elem := range s {
+		if p(elem) {
+			result = append(result, elem)
+		}
+	}
+
+	return result
+}
+
 func Map[T, R any](s []T, f func(T) R) Slice[R] {
 	result := make(Slice[R], 0, len(s))
 
@@ -75,13 +83,7 @@ func StringSliceFrom[T any](s []string) StringSlice[T] {
 }
 
 func (s StringSlice[T]) Map(f func(string) T) Slice[T] {
-	result := make(Slice[T], 0, len(s.Slice))
-
-	for _, elem := range s.Slice {
-		result = append(result, f(elem))
-	}
-
-	return result
+	return Map(s.Slice, f)
 }
 
 func isDigit(r rune) bool {
